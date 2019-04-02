@@ -23,10 +23,10 @@ namespace xadrez
             return peca == null || peca.Cor != Cor;
         }
 
-        private bool TesterTorreParaRoque(Posicao pos)
+        private bool TestarTorreParaRoque(Posicao pos)
         {
             Peca peca = Tabuleiro.Peca(pos);
-            return (pos != null) && (peca is Torre) && (peca.Cor == Cor) && (peca.QtdeMovimentos ==0)       
+            return (pos != null) && (peca is Torre) && (peca.Cor == Cor) && (peca.QtdeMovimentos == 0);      
         }
 
         public override bool[,] MovimentosPossiveis()
@@ -87,9 +87,27 @@ namespace xadrez
             {
                 //Roque pequeno;
                 Posicao posT1 = new Posicao(Posicao.Linha, Posicao.Coluna + 3);
-                if (TesterTorreParaRoque(posT1))
+                if (TestarTorreParaRoque(posT1))
                 {
+                    Posicao p1 = new Posicao(Posicao.Linha, Posicao.Coluna + 1);
+                    Posicao p2 = new Posicao(Posicao.Linha, Posicao.Coluna + 2);
+                    if (Tabuleiro.Peca(p1) == null  && Tabuleiro.Peca(p2) == null)
+                    {
+                        mat[Posicao.Linha, Posicao.Coluna + 2] = true;
+                    }
+                }
 
+                //Roque grande;
+                Posicao posT2 = new Posicao(Posicao.Linha, Posicao.Coluna - 4);
+                if (TestarTorreParaRoque(posT2))
+                {
+                    Posicao p1 = new Posicao(Posicao.Linha, Posicao.Coluna - 1);
+                    Posicao p2 = new Posicao(Posicao.Linha, Posicao.Coluna - 2);
+                    Posicao p3 = new Posicao(Posicao.Linha, Posicao.Coluna - 3);
+                    if (Tabuleiro.Peca(p1) == null && Tabuleiro.Peca(p2) == null && Tabuleiro.Peca(p3) == null)
+                    {
+                        mat[Posicao.Linha, Posicao.Coluna - 2] = true;
+                    }
                 }
             }
             return mat;
